@@ -70,7 +70,7 @@ time.sleep(0.2)
 # Upload the chat photo for someone to change manually
 #cli.sendRemoteImage(group_info.photo, thread_id=newcid, thread_type=ThreadType.GROUP)
 # doesn't work, let's just send the photo link
-cli.send(Message(text=group_info.photo), thread_id=cid, thread_type=ThreadType.GROUP)
+cli.send(Message(text=group_info.photo), thread_id=newcid, thread_type=ThreadType.GROUP)
 time.sleep(0.2)
 
 # Tell the chat that process is done
@@ -87,10 +87,13 @@ cli.send(Message(text="This chat will now be destroyed"), thread_id=cid,
 time.sleep(2.0)
 
 for user in group_info.participants:
+    if user==cli.uid:
+        continue
     try:
         cli.removeUserFromGroup(int(user), thread_id=cid)
         sleep(0.2)
     except:
         pass
 
+cli.removeUserFromGroup(int(cli.uid), thread_id=cid)
 print("Chat recreation process completed")
