@@ -22,6 +22,10 @@ cid = int(input("Chat ID: "))
 # Ask for Group Chat ID to use as new chat
 newcid = int(input("New Chat ID: "))
 
+# Ask to destroy old Group Chat when done
+destroy_s = input("Destroy old Chat when done? [Y/n]")
+destroy = len(destroy_s)==0 or destroy_s[0].lower()=="y"
+
 # Send info messages
 cli.send(Message(text=("%s initiated, recreating this chat..."%vname)),
          thread_id=cid, thread_type=ThreadType.GROUP)
@@ -81,19 +85,21 @@ cli.send(Message(text="Chat recreation has been completed"), thread_id=newcid,
          thread_type=ThreadType.GROUP)
 time.sleep(1.0)
 
-# Tell the old chat it's getting demolished
-cli.send(Message(text="This chat will now be destroyed"), thread_id=cid,
-         thread_type=ThreadType.GROUP)
-time.sleep(2.0)
+if destroy:
+    # Tell the old chat it's getting demolished
+    cli.send(Message(text="This chat will now be destroyed"), thread_id=cid,
+             thread_type=ThreadType.GROUP)
+    time.sleep(2.0)
 
-for user in group_info.participants:
-    if user==cli.uid:
-        continue
-    try:
-        cli.removeUserFromGroup(int(user), thread_id=cid)
-        sleep(0.2)
-    except:
-        pass
+    for user in group_info.participants:
+        if user==cli.uid:
+            continue
+        try:
+            cli.removeUserFromGroup(int(user), thread_id=cid)
+            sleep(0.2)
+        except:
+            pass
 
-cli.removeUserFromGroup(int(cli.uid), thread_id=cid)
+    cli.removeUserFromGroup(int(cli.uid), thread_id=cid)
+
 print("Chat recreation process completed")
