@@ -13,10 +13,7 @@ print("(C) 2017 Neil Thistlethwaite")
 print("")
 
 # Authenticate
-print("Please Login")
-email = input("Email: ")
-password = getpass.getpass("Password: ")
-cli = Client(email,password)
+cli = get_user_client("Please Login")
 
 # Ask for Group Chat ID to re-create
 cid = int(input("Chat ID: "))
