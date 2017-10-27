@@ -1,6 +1,6 @@
 ## Chat Re-Creator v1.0
 ## @author Neil Thistlethwaite
-import getpass
+from ..utils.util import *
 from fbchat.models import *
 from fbchat import log, Client, ThreadType
 import time
