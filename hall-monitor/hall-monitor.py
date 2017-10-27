@@ -7,7 +7,7 @@ sys.path.append("..")
 from utils.util import *
 from fbchat import Client
 from fbchat.models import *
-import time, sys, json, getpass
+import time, sys, json
 
 whitelist = ["<enter enabled chat IDs here>"]
 f = open("namesjson.txt", "r")
