@@ -17,3 +17,4 @@ for user in users:
 # use this lookup table in another program by reading the file and calling json.loads()
 f = open("namesjson.txt", "w")
 f.write(json.dumps(table))
+f.close()
