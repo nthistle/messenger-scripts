@@ -6,11 +6,12 @@
 ### Add Sentiment Analysis to check if term with aggressive tone
 ### Don't simply check if the word is in string ==> split string into set and then check if badword is in there
 ## too lazy to add these changes right now
-
+import sys
+sys.path.append("..")
+from utils.util import *
 from fbchat.models import *
 from fbchat import log, Client
 import time
-import getpass
 
 f = open('badword.txt', 'r')
 l = f.read().split('\n')
@@ -31,6 +32,5 @@ class ResponseBot(Client):
                 self.sendRemoteImage('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/MUTCD_R1-1.svg/2000px-MUTCD_R1-1.svg.png', message=Message(text='This is a Christian Minecraft Server! Absolutely NO PROFANITY!'), thread_id=thread_id, thread_type=thread_type)
                 return
 
-email = input("Please enter your FaceBook email.\n")
-client = ResponseBot(email, getpass.getpass())
+client = ResponseBot(*get_login_creds())
 client.listen()
