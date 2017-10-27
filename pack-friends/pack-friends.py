@@ -1,9 +1,11 @@
 ## Friends to JSON (dictionary generator)
+import sys
+sys.path.append("..")
 from fbchat import Client
 from fbchat.models import *
 import json
 
-client = Client("<username>", "<password>")
+client = get_user_client()
 
 table = {}
 users = client.fetchAllUsers()
