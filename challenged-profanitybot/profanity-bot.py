@@ -26,7 +26,7 @@ class ResponseBot(Client):
         s = message_object.text.lower()
 
         for i in l:
-            if len(i) > 0 and i in s and author_id != self.uid and thread_id not in edchats:
+            if len(i) > 0 and i in s and author_id != self.uid and thread_id not in filterchats:
                 print(i)
                 self.sendRemoteImage('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/MUTCD_R1-1.svg/2000px-MUTCD_R1-1.svg.png', message=Message(text='This is a Christian Minecraft Server! Absolutely NO PROFANITY!'), thread_id=thread_id, thread_type=thread_type)
                 return
