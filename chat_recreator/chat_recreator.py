@@ -1,6 +1,8 @@
 ## Chat Re-Creator v1.0
 ## @author Neil Thistlethwaite
-from ..utils.util import *
+import sys
+sys.path.append("..")
+from utils.util import *
 from fbchat.models import *
 from fbchat import log, Client, ThreadType
 import time
