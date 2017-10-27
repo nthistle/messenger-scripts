@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# This is a bot which activates when a user types "!suspend <suspension time>"
+# and floods the chat with white images until the suspension is over.
+# TODO: add cooldown
 from fbchat import Client
 from fbchat.models import *
 import time, sys, json, getpass
