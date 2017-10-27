@@ -2,6 +2,9 @@
 # This is a bot which activates when a user types "!suspend <suspension time>"
 # and floods the chat with white images until the suspension is over.
 # TODO: add cooldown
+import sys
+sys.path.append("..")
+from utils.util import *
 from fbchat import Client
 from fbchat.models import *
 import time, sys, json, getpass
@@ -23,6 +26,5 @@ class HallMonitor(Client):
                     client.sendRemoteImage("https://cdn11.ahalife.com/uploads/onboarding/images/kzsc37uuTFuZRSJ8OIB7_gallery-1000x1000-white.jpg", thread_id=thread_id, thread_type=ThreadType.GROUP)
                 client.send(Message(text="That suspension is invalid."), thread_id=thread_id, thread_type=ThreadType.GROUP)
 
-username = raw_input("Enter your Facebook login email: ")
-client = HallMonitor(username, getpass.getpass())
+client = HallMonitor(*get_login_creds())
 client.listen()
