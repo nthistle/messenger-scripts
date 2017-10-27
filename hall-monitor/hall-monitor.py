@@ -7,7 +7,7 @@ sys.path.append("..")
 from utils.util import *
 from fbchat import Client
 from fbchat.models import *
-import time, sys, json
+import time, json
 
 whitelist = ["<enter enabled chat IDs here>"]
 f = open("namesjson.txt", "r")
@@ -24,7 +24,7 @@ class HallMonitor(Client):
                 while time.clock() - t < suspension:
                     time.sleep(0.5)
                     client.sendRemoteImage("https://cdn11.ahalife.com/uploads/onboarding/images/kzsc37uuTFuZRSJ8OIB7_gallery-1000x1000-white.jpg", thread_id=thread_id, thread_type=ThreadType.GROUP)
+            except ValueError:
                 client.send(Message(text="That suspension is invalid."), thread_id=thread_id, thread_type=ThreadType.GROUP)
-
 client = HallMonitor(*get_login_creds())
 client.listen()
