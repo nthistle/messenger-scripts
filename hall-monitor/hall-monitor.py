@@ -9,10 +9,7 @@ from fbchat import Client
 from fbchat.models import *
 import time, json
 
-whitelist = ["<enter enabled chat IDs here>"]
-f = open("namesjson.txt", "r")
-names = json.loads(f.read())
-f.close()
+whitelist = input("Enter whitelist numbers, separated by commas: ").replace(" ", "").split(",")
 class HallMonitor(Client):
     def onMessage(self, mid, message, author_id, thread_id, ts, **kwargs):
         words = message.split(" ")
