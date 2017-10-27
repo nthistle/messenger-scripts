@@ -13,7 +13,7 @@ whitelist = input("Enter whitelist numbers, separated by commas: ").replace(" ",
 class HallMonitor(Client):
     def onMessage(self, mid, message, author_id, thread_id, ts, **kwargs):
         words = message.split(" ")
-        if words[0].lower() == "!suspend" and author_id != self.uid and thread_id in whitelist:
+        if words[0].lower() == "!suspend" and thread_id in whitelist:
             try:
                 suspension = int(words[1])
                 t = time.clock()
