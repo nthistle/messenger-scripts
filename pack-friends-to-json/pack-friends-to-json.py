@@ -1,3 +1,4 @@
+## Friends to JSON (dictionary generator)
 from fbchat import Client
 from fbchat.models import *
 import json
