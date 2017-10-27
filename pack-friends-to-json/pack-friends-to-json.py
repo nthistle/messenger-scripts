@@ -1,5 +1,4 @@
 ## Friends to JSON (dictionary generator)
-## @author Ryan Pope
 from fbchat import Client
 from fbchat.models import *
 import json
