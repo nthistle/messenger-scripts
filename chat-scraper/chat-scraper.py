@@ -19,6 +19,7 @@ def get_target_chats(client):
         print("[C]onfirm targets")
         print("Add targets by [I]D")
         print("[S]earch for targets by group name")
+        print("[L]ist current targets")
         choice = input("> ")
         choice = choice[0].lower() if len(choice)>0 else None
         if choice == "c":
@@ -36,7 +37,7 @@ def get_target_chats(client):
             query = input("> ")
             results = client.searchForGroups(query, limit=30)
             for i in range(len(results)):
-                print("{0: >2}: {}, '{}'".format(i+1,results[i].uid,results[i].name))
+                print("{0: >2}: {1}, '{2}'".format(i+1,results[i].uid,results[i].name))
             print("Choose action: ")
             print("Add [A]ll")
             print("Add [N]one")
@@ -55,7 +56,20 @@ def get_target_chats(client):
                 print("Error, action not understood")
             if subchoice != "a":
                 print("No targets added to list")
+        elif choice == "l":
+            for i in range(len(target_list)):
+                print("{0: >2}: {1}".format(i+1,target_list[i]))
+            subchoice = input("Show detailed? [y/N] ")
+            if len(subchoice)>0 and subchoice[0].lower()=="y":
+                info = client.fetchThreadInfo(*target_list)
+                for i in range(len(target_list)):
+                    print("{0: >2}: {1}, '{2}' ({3} participants)".format(i+1,target_list[i],info[str(target_list[i])].name,
+                                                                          len(info[str(target_list[i])].participants)))
         else:
             print("Error, action not understood")
             
         
+# Authenticate
+cli = get_user_client("Please Login")
+
+targets = get_target_chats(cli)
