@@ -6,6 +6,8 @@ from utils.util import *
 from fbchat.models import *
 from fbchat import log, Client, ThreadType
 import time
+import requests
+import os
 
 print("Chat Scraper v1.0")
 print("(C) 2017 Neil Thistlethwaite")
@@ -80,3 +82,52 @@ def get_target_chats(client):
 cli = get_user_client("Please Login")
 
 targets = get_target_chats(cli)
+
+print()
+print("Base directory to save in?" )
+basedir = input("> ")
+
+if not os.path.exists(basedir):
+    os.mkdir(basedir)
+
+for i in range(len(targets)):
+    target = targets[i]
+    currentdir = os.path.join(basedir, str(target))
+    os.mkdir(currentdir)
+    print("Fetching messages from chat #%d... (%d)" % (i+1, target))
+    messages = cli.fetchThreadMessages(thread_id=target, limit=100000) # max 100,000 messages
+    print()
+    print("Locating image URLs...")
+    img_urls = []
+    for j in range(len(messages)):
+        message = messages[j]
+        try: 
+            if len(message.attachments) == 0:
+                continue
+            for k in range(len(message.attachments)):
+                attachment = message.attachments[k]
+                try:
+                    img_urls.append((attachment.large_preview_url,j,k))
+                except:
+                    pass
+        except:
+            pass
+    print("%d image URLs loaded"%len(img_urls))
+    print()
+    print("Downloading images...")
+    failures = 0
+    for j in range(len(img_urls)):
+        print("\r{0:.2f}%\r".format(100*j/len(img_urls)), end="\r")
+        url = img_urls[j]
+        try:
+            ext = ".png" if ".png" in url[0].lower() else ".jpg"
+            file = open(os.path.join(currentdir, "%06d_%02d"%url[1:]),'wb')
+            file.write(requests.get(url[0]).content)
+            file.close()
+        except:
+            failures += 1
+    print()
+    if failures > 0:
+        print("%d failures occcurred" % failures)
+    print()
+print("Done downloading the images from all targets")
