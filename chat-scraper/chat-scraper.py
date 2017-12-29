@@ -22,28 +22,33 @@ def get_target_chats(client):
         print("[L]ist current targets")
         choice = input("> ")
         choice = choice[0].lower() if len(choice)>0 else None
+        print()
         if choice == "c":
             return target_list
         elif choice == "i":
             print("Enter target IDs separated by commas: ")
-            new_targets_raw = [int(t) for t in input("> ").split(",")]
-            new_targets = [t for t in new_targets_raw if t not in target_list]
-            target_list += new_targets
-            print("%d new targets added to list" % len(new_targets))
-            if len(new_targets)!=len(new_targets_raw):
-                print("%d were not added because they were duplicates" % (len(new_targets_raw)-len(newtargets)))
+            input_targets = input("> ")
+            if len(input_targets) > 0:
+                new_targets_raw = [int(t) for t in input_targets.split(",")]
+                new_targets = [t for t in new_targets_raw if t not in target_list]
+                target_list += new_targets
+                print("%d new targets added to list" % len(new_targets))
+                if len(new_targets)!=len(new_targets_raw):
+                    print("%d were not added because they were duplicates" % (len(new_targets_raw)-len(new_targets)))
         elif choice == "s":
             print("Enter search query: ")
             query = input("> ")
             results = client.searchForGroups(query, limit=30)
             for i in range(len(results)):
                 print("{0: >2}: {1}, '{2}'".format(i+1,results[i].uid,results[i].name))
+            print()
             print("Choose action: ")
             print("Add [A]ll")
             print("Add [N]one")
             print("Add [S]pecific")
             subchoice = input("> ")
             subchoice = subchoice[0].lower() if len(subchoice)>0 else None
+            print()
             if subchoice == "a":
                 new_targets = [int(t.uid) for t in results if int(t.uid) not in target_list]
                 target_list += new_targets
@@ -59,6 +64,7 @@ def get_target_chats(client):
         elif choice == "l":
             for i in range(len(target_list)):
                 print("{0: >2}: {1}".format(i+1,target_list[i]))
+            print()
             subchoice = input("Show detailed? [y/N] ")
             if len(subchoice)>0 and subchoice[0].lower()=="y":
                 info = client.fetchThreadInfo(*target_list)
@@ -67,6 +73,7 @@ def get_target_chats(client):
                                                                           len(info[str(target_list[i])].participants)))
         else:
             print("Error, action not understood")
+        print()
             
         
 # Authenticate
