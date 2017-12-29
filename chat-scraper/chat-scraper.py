@@ -121,7 +121,7 @@ for i in range(len(targets)):
         url = img_urls[j]
         try:
             ext = ".png" if ".png" in url[0].lower() else ".jpg"
-            file = open(os.path.join(currentdir, "%06d_%02d"%url[1:]),'wb')
+            file = open(os.path.join(currentdir, ("%06d_%02d"%url[1:])+ext),'wb')
             file.write(requests.get(url[0]).content)
             file.close()
         except:
