@@ -80,9 +80,9 @@ class VoteKickBot(Client):
 				  thread_id=thread_id, thread_type=thread_type)
 			
 			
-vname = "VoteKickBot v1.0"
-print("VotKickBot v1.0")
-print("(C) 2017 Jonathan Pollock")
+vname = "VoteKickBot v1.1"
+print("VotKickBot v1.1")
+print("(C) 2017 Jonathan Pollock & Neil Thistlethwaite")
 print("")
 vkbot = VoteKickBot(*get_login_creds("Please Login"))
 print()
