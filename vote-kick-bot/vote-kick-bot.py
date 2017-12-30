@@ -71,13 +71,16 @@ class VoteKickBot(Client):
 			for key in self.current_votes[thread_id]:
 				if self.current_votes[thread_id][key] == voted_for_id:
 					vote_count += 1
-			self.send(Message(text=("%s now has %d votes"%(self.capitalize_first(message_object.text), vote_count))),
+			self.send(Message(text=(("%s now has %d vote"%(self.capitalize_first(message_object.text), vote_count)) + ("s" if vote_count>1 else ""))),
 				  thread_id=thread_id, thread_type=thread_type)
 			if vote_count >= self.vote_threshold:
 				time.sleep(0.2)
 				self.send(Message(text=("The Island has spoken. %s will be leaving. "%self.capitalize_first(message_object.text))),
 					  thread_id=thread_id,thread_type=thread_type)
 				self.removeUserFromGroup(voted_for_id, thread_id=thread_id)
+				self.is_vote_active[thread_id] = False
+				for key in self.current_votes[thread_id]:
+					self.current_votes[thread_id][key] = None
 		else:
 			self.send(Message(text="%s, you have already voted. A vote is final."%self.capitalize_first(self.master_lookup[1][author_id])),
 				  thread_id=thread_id, thread_type=thread_type)
