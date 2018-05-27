@@ -26,13 +26,13 @@ destroy_s = input("Destroy old Chat when done? [Y/n]")
 destroy = len(destroy_s)==0 or destroy_s[0].lower()=="y"
 
 # Send info messages
-cli.send(Message(text=("%s initiated, recreating this chat..."%vname)),
-         thread_id=cid, thread_type=ThreadType.GROUP)
+##cli.send(Message(text=("%s initiated, recreating this chat..."%vname)),
+##         thread_id=cid, thread_type=ThreadType.GROUP)
 
 time.sleep(0.2)
 
-cli.send(Message(text=("%s initiated, recreating into this chat..."%vname)),
-         thread_id=newcid, thread_type=ThreadType.GROUP)
+##cli.send(Message(text=("%s initiated, recreating into this chat..."%vname)),
+##         thread_id=newcid, thread_type=ThreadType.GROUP)
 
 time.sleep(0.1)
 
@@ -63,31 +63,41 @@ for uid in old_nicks:
 time.sleep(0.5)
 
 # Set chat emoji
-cli.changeThreadEmoji(group_info.emoji, thread_id=newcid)
-time.sleep(0.2)
+try:
+    cli.changeThreadEmoji(group_info.emoji, thread_id=newcid)
+    time.sleep(0.2)
+except:
+    pass
 
 # Set chat colors
-cli.changeThreadColor(group_info.color, thread_id=newcid)
-time.sleep(0.2)
+try:
+    cli.changeThreadColor(group_info.color, thread_id=newcid)
+    time.sleep(0.2)
+except:
+    pass
 
 # Upload the chat photo for someone to change manually
 #cli.sendRemoteImage(group_info.photo, thread_id=newcid, thread_type=ThreadType.GROUP)
 # doesn't work, let's just send the photo link
-cli.send(Message(text=group_info.photo), thread_id=newcid, thread_type=ThreadType.GROUP)
-time.sleep(0.2)
+
+try:
+    cli.send(Message(text=group_info.photo), thread_id=newcid, thread_type=ThreadType.GROUP)
+    time.sleep(0.2)
+except:
+    pass
 
 # Tell the chat that process is done
-cli.send(Message(text="Chat recreation has been completed"), thread_id=cid,
-         thread_type=ThreadType.GROUP)
+#cli.send(Message(text="Chat recreation has been completed"), thread_id=cid,
+#         thread_type=ThreadType.GROUP)
 time.sleep(0.15)
-cli.send(Message(text="Chat recreation has been completed"), thread_id=newcid,
-         thread_type=ThreadType.GROUP)
+#cli.send(Message(text="Chat recreation has been completed"), thread_id=newcid,
+#         thread_type=ThreadType.GROUP)
 time.sleep(1.0)
 
 if destroy:
     # Tell the old chat it's getting demolished
-    cli.send(Message(text="This chat will now be destroyed"), thread_id=cid,
-             thread_type=ThreadType.GROUP)
+    #cli.send(Message(text="This chat will now be destroyed"), thread_id=cid,
+    #         thread_type=ThreadType.GROUP)
     time.sleep(2.0)
 
     for user in group_info.participants:
@@ -99,6 +109,6 @@ if destroy:
         except:
             pass
 
-    cli.removeUserFromGroup(int(cli.uid), thread_id=cid)
+    #cli.removeUserFromGroup(int(cli.uid), thread_id=cid)
 
 print("Chat recreation process completed")
